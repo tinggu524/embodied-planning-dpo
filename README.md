@@ -1,12 +1,11 @@
 # Embodied Planning with Multimodal SFT and Preference Optimization
 
 <p align="center">
-  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/Project%20Page-GitHub-4b5563?style=for-the-badge&logo=github" alt="Project Page"></a>
-  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
-  <a href="#methods"><img src="https://img.shields.io/badge/Method-LoRA%20SFT%20%2B%20DPO-2e7d32?style=for-the-badge" alt="Method"></a>
-  <a href="#data-and-model-paths"><img src="https://img.shields.io/badge/Dataset-WAP%20Trajectories-1565c0?style=for-the-badge" alt="Dataset"></a>
-  <a href="https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct"><img src="https://img.shields.io/badge/Model-Qwen2.5--VL--3B-f57c00?style=for-the-badge" alt="Model"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-6a1b9a?style=for-the-badge" alt="License"></a>
+  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/project-GitHub-555.svg" alt="Project Page"></a>
+  <a href="#methods"><img src="https://img.shields.io/badge/method-LoRA%20SFT%20%2B%20DPO-green.svg" alt="Method"></a>
+  <a href="https://huggingface.co/datasets/sii-research/World-Aware-Planning"><img src="https://img.shields.io/badge/dataset-World--Aware--Planning-blue.svg" alt="Dataset: World-Aware Planning"></a>
+  <a href="https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct"><img src="https://img.shields.io/badge/model-Qwen2.5--VL--3B-yellow.svg" alt="Model: Qwen2.5-VL-3B"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 </p>
 
 <p align="center">
@@ -37,6 +36,7 @@ Policy SFT, semantic state predictor training, DPO training, and shared evaluati
 - [🛠️ Main Scripts](#main-scripts)
 - [📁 Data and Model Paths](#data-and-model-paths)
 - [📝 Notes](#notes)
+- [🙏 Acknowledgements](#acknowledgements)
 - [⚖️ License](#license)
 
 <a id="project-overview"></a>
@@ -265,6 +265,12 @@ These files are not included in this repository.
 - This project operates at the high-level semantic action level.
 - The successor-state consistency method uses expert successor states only for offline preference construction, not for test-time inference.
 - At inference time, the final DPO policy directly predicts the next high-level action from the current observation, instruction, and action history.
+
+<a id="acknowledgements"></a>
+
+## 🙏 Acknowledgements
+
+This project builds on the [World-Aware Planning (WAP)](https://huggingface.co/datasets/sii-research/World-Aware-Planning) trajectory dataset and the [Qwen2.5-VL-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct) vision-language model. We thank the authors and maintainers of these resources for making embodied planning data and open VLM checkpoints available to the community.
 
 <a id="license"></a>
 

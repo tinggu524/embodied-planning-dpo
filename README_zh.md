@@ -1,12 +1,11 @@
 # 面向具身智能的多模态高层规划与偏好优化
 
 <p align="center">
-  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/Project%20Page-GitHub-4b5563?style=for-the-badge&logo=github" alt="Project Page"></a>
-  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
-  <a href="#methods"><img src="https://img.shields.io/badge/Method-LoRA%20SFT%20%2B%20DPO-2e7d32?style=for-the-badge" alt="Method"></a>
-  <a href="#data-and-model-paths"><img src="https://img.shields.io/badge/Dataset-WAP%20Trajectories-1565c0?style=for-the-badge" alt="Dataset"></a>
-  <a href="https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct"><img src="https://img.shields.io/badge/Model-Qwen2.5--VL--3B-f57c00?style=for-the-badge" alt="Model"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-6a1b9a?style=for-the-badge" alt="License"></a>
+  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/project-GitHub-555.svg" alt="Project Page"></a>
+  <a href="#methods"><img src="https://img.shields.io/badge/method-LoRA%20SFT%20%2B%20DPO-green.svg" alt="Method"></a>
+  <a href="https://huggingface.co/datasets/sii-research/World-Aware-Planning"><img src="https://img.shields.io/badge/dataset-World--Aware--Planning-blue.svg" alt="Dataset: World-Aware Planning"></a>
+  <a href="https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct"><img src="https://img.shields.io/badge/model-Qwen2.5--VL--3B-yellow.svg" alt="Model: Qwen2.5-VL-3B"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 </p>
 
 <p align="center">
@@ -33,6 +32,7 @@ Policy SFT、语义状态预测模型训练、DPO 训练和通用评估工具放
 - [🛠️ 主要脚本](#main-scripts)
 - [📁 本地路径约定](#data-and-model-paths)
 - [📝 说明](#notes)
+- [🙏 致谢](#acknowledgements)
 - [⚖️ License](#license)
 
 <a id="project-overview"></a>
@@ -261,6 +261,12 @@ models/qwen2_5_vl_3b_wap_value_function_lora/
 - 本项目工作在高层语义动作层面，不涉及底层连续控制。
 - 后继语义状态一致性方法只在离线偏好构造阶段使用专家后继状态，测试时不使用未来轨迹信息。
 - 最终推理时，DPO policy 直接根据当前观测、任务指令和历史动作预测下一步高层动作。
+
+<a id="acknowledgements"></a>
+
+## 🙏 致谢
+
+本项目基于 [World-Aware Planning (WAP)](https://huggingface.co/datasets/sii-research/World-Aware-Planning) 轨迹数据集和 [Qwen2.5-VL-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct) 视觉语言模型开展实验。感谢相关作者和维护者开放具身规划数据与视觉语言模型权重，为本项目提供了重要基础。
 
 <a id="license"></a>
 
