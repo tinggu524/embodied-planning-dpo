@@ -1,5 +1,7 @@
 # Successor-State Consistency DPO
 
+[English](README.md) | [中文](README_zh.md)
+
 This method constructs DPO preference pairs by using a semantic state prediction model to identify hard negative actions. It is the stronger final pipeline in this project.
 
 ## Idea
@@ -44,27 +46,34 @@ Reward margin: 0.4107
 
 ## Scripts
 
+Method-specific script:
+
 ```text
-scripts/train_policy_lora.py
-scripts/train_worldmodel_lora.py
 scripts/generate_policy_dpo_pairs.py
-scripts/train_policy_dpo.py
-scripts/compute_dpo_reward_stats.py
-scripts/compare_policy_dpo.py
-scripts/merge_compare_results.py
-scripts/split_wap_train_eval.py
-scripts/image_utils.py
-scripts/wap_sampling.py
+```
+
+Shared scripts used by this method:
+
+```text
+../../shared/scripts/train_policy_lora.py
+../../shared/scripts/train_worldmodel_lora.py
+../../shared/scripts/train_policy_dpo.py
+../../shared/scripts/compute_dpo_reward_stats.py
+../../shared/scripts/compare_policy_dpo.py
+../../shared/scripts/merge_compare_results.py
+../../shared/scripts/split_wap_train_eval.py
+../../shared/scripts/image_utils.py
+../../shared/scripts/wap_sampling.py
 ```
 
 ## Example Run
 
 ```bash
 cd /Users/yeats/Desktop/wap
-python methods/successor_state_dpo/scripts/train_policy_lora.py
-python methods/successor_state_dpo/scripts/train_worldmodel_lora.py
+python shared/scripts/train_policy_lora.py
+python shared/scripts/train_worldmodel_lora.py
 python methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
-python methods/successor_state_dpo/scripts/train_policy_dpo.py
+python shared/scripts/train_policy_dpo.py
 ```
 
 The repository does not include raw data, processed JSONL files, checkpoints, or LoRA adapters.

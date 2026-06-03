@@ -1,11 +1,15 @@
 # 面向具身智能的多模态高层规划与偏好优化
 
+[English](README.md) | [中文](README_zh.md)
+
 本仓库整理了一个基于 World-Aware Planning (WAP) 轨迹数据的多模态高层规划项目。项目关注的问题是：在给定任务指令、当前视觉观测和历史高层动作的情况下，如何让视觉语言策略模型更可靠地预测下一步语义动作。
 
 项目包含两个偏好构造方案，并通过 DPO 对策略模型进行进一步优化：
 
 1. **任务进度价值函数 DPO**：训练一个 value function，对候选动作后的预测语义状态进行任务进度打分。
 2. **后继语义状态一致性 DPO**：使用语义状态预测模型，构造不能解释专家后继状态的 hard negative 动作。
+
+Policy SFT、语义状态预测模型训练、DPO 训练和通用评估工具放在 `shared/scripts/` 下，因为两个方法共用同一个策略模型和语义状态预测模块。
 
 ## 项目任务
 
@@ -135,6 +139,17 @@ Reward margin：0.4107
 ├── data_preparation/
 │   ├── convert_wap.py
 │   └── resize_wap_images.py
+├── shared/
+│   └── scripts/
+│       ├── train_policy_lora.py
+│       ├── train_worldmodel_lora.py
+│       ├── train_policy_dpo.py
+│       ├── compute_dpo_reward_stats.py
+│       ├── compare_policy_dpo.py
+│       ├── merge_compare_results.py
+│       ├── split_wap_train_eval.py
+│       ├── image_utils.py
+│       └── wap_sampling.py
 └── methods/
     ├── value_function_dpo/
     │   ├── README.md
@@ -143,17 +158,12 @@ Reward margin：0.4107
     │       ├── build_value_function_data.py
     │       ├── train_value_function_lora.py
     │       ├── generate_value_function_pairs.py
-    │       ├── evaluate_value_selector.py
-    │       └── train_policy_dpo.py
+    │       └── evaluate_value_selector.py
     └── successor_state_dpo/
         ├── README.md
         ├── README_zh.md
         └── scripts/
-            ├── train_policy_lora.py
-            ├── generate_policy_dpo_pairs.py
-            ├── train_policy_dpo.py
-            ├── compute_dpo_reward_stats.py
-            └── compare_policy_dpo.py
+            └── generate_policy_dpo_pairs.py
 ```
 
 原始数据、处理后的 JSONL、模型权重、LoRA adapter、日志和评估结果等大文件不会提交到仓库中。
@@ -167,14 +177,15 @@ data_preparation/convert_wap.py
 data_preparation/resize_wap_images.py
 ```
 
-后继语义状态一致性 DPO：
+共用训练、DPO 和评估脚本：
 
 ```text
-methods/successor_state_dpo/scripts/train_policy_lora.py
-methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
-methods/successor_state_dpo/scripts/train_policy_dpo.py
-methods/successor_state_dpo/scripts/compute_dpo_reward_stats.py
-methods/successor_state_dpo/scripts/compare_policy_dpo.py
+shared/scripts/train_policy_lora.py
+shared/scripts/train_worldmodel_lora.py
+shared/scripts/train_policy_dpo.py
+shared/scripts/compute_dpo_reward_stats.py
+shared/scripts/compare_policy_dpo.py
+shared/scripts/merge_compare_results.py
 ```
 
 任务进度价值函数 DPO：
@@ -184,7 +195,12 @@ methods/value_function_dpo/scripts/build_value_function_data.py
 methods/value_function_dpo/scripts/train_value_function_lora.py
 methods/value_function_dpo/scripts/generate_value_function_pairs.py
 methods/value_function_dpo/scripts/evaluate_value_selector.py
-methods/value_function_dpo/scripts/train_policy_dpo.py
+```
+
+后继语义状态一致性 DPO：
+
+```text
+methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
 ```
 
 ## 本地路径约定

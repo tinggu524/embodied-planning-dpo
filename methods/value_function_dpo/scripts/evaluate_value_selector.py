@@ -1,11 +1,20 @@
 import argparse
 import json
 import os
+import sys
+from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
 import torch
 from tqdm import tqdm
 from transformers import AutoProcessor
+
+ROOT_DIR = Path(__file__).resolve().parents[3]
+SHARED_SCRIPTS = ROOT_DIR / "shared" / "scripts"
+SUCCESSOR_STATE_SCRIPTS = ROOT_DIR / "methods" / "successor_state_dpo" / "scripts"
+for scripts_dir in (SHARED_SCRIPTS, SUCCESSOR_STATE_SCRIPTS):
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
 
 from generate_policy_dpo_pairs import extract_action, generate_candidate_actions, load_lora_model, normalize_action
 from generate_value_function_pairs import score_action

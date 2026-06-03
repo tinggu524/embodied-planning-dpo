@@ -3,7 +3,9 @@ import copy
 import json
 import os
 import re
+import sys
 from difflib import SequenceMatcher
+from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
 import torch
@@ -11,6 +13,10 @@ import torch.nn.functional as F
 from peft import PeftModel
 from tqdm import tqdm
 from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
+
+SHARED_SCRIPTS = Path(__file__).resolve().parents[3] / "shared" / "scripts"
+if str(SHARED_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SHARED_SCRIPTS))
 
 from wap_sampling import balanced_reservoir_sample
 from image_utils import open_rgb_image

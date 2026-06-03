@@ -1,5 +1,7 @@
 # 后继语义状态一致性 DPO
 
+[English](README.md) | [中文](README_zh.md)
+
 该方法使用语义状态预测模型来构造 DPO 偏好对，是本项目中效果更好的最终方案。
 
 ## 核心思路
@@ -61,16 +63,24 @@ Reward margin：0.4107
 
 ## 主要脚本
 
+方法特有脚本：
+
 ```text
-scripts/train_policy_lora.py
 scripts/generate_policy_dpo_pairs.py
-scripts/train_policy_dpo.py
-scripts/compute_dpo_reward_stats.py
-scripts/compare_policy_dpo.py
-scripts/merge_compare_results.py
-scripts/split_wap_train_eval.py
-scripts/image_utils.py
-scripts/wap_sampling.py
+```
+
+该方法使用的共用脚本：
+
+```text
+../../shared/scripts/train_policy_lora.py
+../../shared/scripts/train_worldmodel_lora.py
+../../shared/scripts/train_policy_dpo.py
+../../shared/scripts/compute_dpo_reward_stats.py
+../../shared/scripts/compare_policy_dpo.py
+../../shared/scripts/merge_compare_results.py
+../../shared/scripts/split_wap_train_eval.py
+../../shared/scripts/image_utils.py
+../../shared/scripts/wap_sampling.py
 ```
 
 ## 示例运行
@@ -78,11 +88,13 @@ scripts/wap_sampling.py
 ```bash
 cd /Users/yeats/Desktop/wap
 
-python methods/successor_state_dpo/scripts/train_policy_lora.py
+python shared/scripts/train_policy_lora.py
+
+python shared/scripts/train_worldmodel_lora.py
 
 python methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
 
-python methods/successor_state_dpo/scripts/train_policy_dpo.py
+python shared/scripts/train_policy_dpo.py
 ```
 
 原始数据、处理后的 JSONL、模型权重、LoRA adapter、日志和评估结果不包含在本仓库中。

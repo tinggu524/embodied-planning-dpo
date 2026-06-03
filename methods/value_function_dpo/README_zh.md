@@ -1,5 +1,7 @@
 # 任务进度价值函数 DPO
 
+[English](README.md) | [中文](README_zh.md)
+
 该方法训练一个任务进度 value function，用它作为 critic 给 policy 生成的候选动作打分，并构造 DPO 偏好对。它在本项目中作为对比方案，用于分析 value-function critic 在高层具身规划任务中的效果。
 
 ## 核心思路
@@ -77,19 +79,26 @@ GT candidate coverage：91.2%
 
 ## 主要脚本
 
+方法特有脚本：
+
 ```text
 scripts/build_value_function_data.py
 scripts/train_value_function_lora.py
 scripts/generate_value_function_pairs.py
 scripts/evaluate_value_selector.py
-scripts/train_policy_lora.py
-scripts/train_worldmodel_lora.py
-scripts/train_policy_dpo.py
-scripts/compute_dpo_reward_stats.py
-scripts/compare_policy_dpo.py
-scripts/split_wap_train_eval.py
-scripts/image_utils.py
-scripts/wap_sampling.py
+```
+
+该方法使用的共用脚本：
+
+```text
+../../shared/scripts/train_policy_lora.py
+../../shared/scripts/train_worldmodel_lora.py
+../../shared/scripts/train_policy_dpo.py
+../../shared/scripts/compute_dpo_reward_stats.py
+../../shared/scripts/compare_policy_dpo.py
+../../shared/scripts/split_wap_train_eval.py
+../../shared/scripts/image_utils.py
+../../shared/scripts/wap_sampling.py
 ```
 
 ## 示例运行
@@ -97,13 +106,17 @@ scripts/wap_sampling.py
 ```bash
 cd /Users/yeats/Desktop/wap
 
+python shared/scripts/train_policy_lora.py
+
+python shared/scripts/train_worldmodel_lora.py
+
 python methods/value_function_dpo/scripts/build_value_function_data.py
 
 python methods/value_function_dpo/scripts/train_value_function_lora.py
 
 python methods/value_function_dpo/scripts/generate_value_function_pairs.py
 
-python methods/value_function_dpo/scripts/train_policy_dpo.py \
+python shared/scripts/train_policy_dpo.py \
   --data_path ./data/processed/wap_qwen_policy_value_dpo_pairs.jsonl \
   --output_dir ./models/qwen2_5_vl_3b_wap_policy_value_dpo_lora
 ```

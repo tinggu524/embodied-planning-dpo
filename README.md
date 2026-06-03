@@ -1,5 +1,7 @@
 # Embodied Planning with Multimodal SFT and Preference Optimization
 
+[English](README.md) | [中文](README_zh.md)
+
 This repository contains a multimodal high-level planning project for embodied AI tasks based on the World-Aware Planning (WAP) trajectory data. The project studies how to improve a vision-language policy with supervised fine-tuning and preference optimization.
 
 The core question is:
@@ -10,6 +12,8 @@ The project compares two preference-construction strategies:
 
 1. **Value-Function DPO**: uses a learned task-progress value model to score candidate post-action semantic states.
 2. **Successor-State Consistency DPO**: uses a semantic state prediction model to identify hard negative actions that cannot explain the expert successor state.
+
+Policy SFT, semantic state predictor training, DPO training, and shared evaluation utilities are placed under `shared/scripts/` because both methods use the same policy and semantic-state backbone.
 
 ## Project Overview
 
@@ -135,27 +139,35 @@ This method is used as the stronger final pipeline in this project.
 ```text
 .
 ├── README.md
+├── README_zh.md
 ├── data_preparation/
 │   ├── convert_wap.py
 │   └── resize_wap_images.py
+├── shared/
+│   └── scripts/
+│       ├── train_policy_lora.py
+│       ├── train_worldmodel_lora.py
+│       ├── train_policy_dpo.py
+│       ├── compute_dpo_reward_stats.py
+│       ├── compare_policy_dpo.py
+│       ├── merge_compare_results.py
+│       ├── split_wap_train_eval.py
+│       ├── image_utils.py
+│       └── wap_sampling.py
 └── methods/
     ├── value_function_dpo/
     │   ├── README.md
+    │   ├── README_zh.md
     │   └── scripts/
     │       ├── build_value_function_data.py
     │       ├── train_value_function_lora.py
     │       ├── generate_value_function_pairs.py
-    │       ├── evaluate_value_selector.py
-    │       └── train_policy_dpo.py
+    │       └── evaluate_value_selector.py
     └── successor_state_dpo/
         ├── README.md
+        ├── README_zh.md
         └── scripts/
-            ├── train_policy_lora.py
-            ├── train_worldmodel_lora.py
-            ├── generate_policy_dpo_pairs.py
-            ├── train_policy_dpo.py
-            ├── compute_dpo_reward_stats.py
-            └── compare_policy_dpo.py
+            └── generate_policy_dpo_pairs.py
 ```
 
 Large files such as raw data, processed JSONL files, model checkpoints, LoRA adapters, logs, and evaluation outputs are intentionally excluded from the repository.
@@ -169,15 +181,15 @@ data_preparation/convert_wap.py
 data_preparation/resize_wap_images.py
 ```
 
-Successor-state consistency DPO:
+Shared training, DPO, and evaluation scripts:
 
 ```text
-methods/successor_state_dpo/scripts/train_policy_lora.py
-methods/successor_state_dpo/scripts/train_worldmodel_lora.py
-methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
-methods/successor_state_dpo/scripts/train_policy_dpo.py
-methods/successor_state_dpo/scripts/compute_dpo_reward_stats.py
-methods/successor_state_dpo/scripts/compare_policy_dpo.py
+shared/scripts/train_policy_lora.py
+shared/scripts/train_worldmodel_lora.py
+shared/scripts/train_policy_dpo.py
+shared/scripts/compute_dpo_reward_stats.py
+shared/scripts/compare_policy_dpo.py
+shared/scripts/merge_compare_results.py
 ```
 
 Value-function DPO:
@@ -187,7 +199,12 @@ methods/value_function_dpo/scripts/build_value_function_data.py
 methods/value_function_dpo/scripts/train_value_function_lora.py
 methods/value_function_dpo/scripts/generate_value_function_pairs.py
 methods/value_function_dpo/scripts/evaluate_value_selector.py
-methods/value_function_dpo/scripts/train_policy_dpo.py
+```
+
+Successor-state consistency DPO:
+
+```text
+methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
 ```
 
 ## Data and Model Paths

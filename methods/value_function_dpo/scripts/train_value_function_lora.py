@@ -1,5 +1,7 @@
 import argparse
+import sys
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import torch
@@ -11,6 +13,10 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
+
+SHARED_SCRIPTS = Path(__file__).resolve().parents[3] / "shared" / "scripts"
+if str(SHARED_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SHARED_SCRIPTS))
 
 from image_utils import open_rgb_image
 from wap_sampling import balanced_reservoir_sample
@@ -234,4 +240,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
