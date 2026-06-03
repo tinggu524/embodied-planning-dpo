@@ -12,7 +12,7 @@
   <strong>English</strong> / <a href="README_zh.md">中文</a>
 </p>
 
-This repository contains a multimodal high-level planning project for embodied AI tasks based on the World-Aware Planning (WAP) trajectory data. The project studies how to improve a vision-language policy with supervised fine-tuning and preference optimization.
+This repository presents a multimodal high-level planning project for embodied AI tasks built on the World-Aware Planning (WAP) trajectory data. It trains a closed-loop, step-wise planner that predicts the next semantic action from the current visual observation, task instruction, and action history, rather than generating a full plan at once. The project further studies how supervised fine-tuning and preference optimization can improve action selection among multiple plausible high-level candidates.
 
 The core question is:
 
