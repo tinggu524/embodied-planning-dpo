@@ -1,6 +1,17 @@
 # Embodied Planning with Multimodal SFT and Preference Optimization
 
-[English](README.md) | [中文](README_zh.md)
+<p align="center">
+  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/Project%20Page-GitHub-4b5563?style=for-the-badge&logo=github" alt="Project Page"></a>
+  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
+  <a href="#methods"><img src="https://img.shields.io/badge/Method-LoRA%20SFT%20%2B%20DPO-2e7d32?style=for-the-badge" alt="Method"></a>
+  <a href="#data-and-model-paths"><img src="https://img.shields.io/badge/Dataset-WAP%20Trajectories-1565c0?style=for-the-badge" alt="Dataset"></a>
+  <a href="https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct"><img src="https://img.shields.io/badge/Model-Qwen2.5--VL--3B-f57c00?style=for-the-badge" alt="Model"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-6a1b9a?style=for-the-badge" alt="License"></a>
+</p>
+
+<p align="center">
+  <strong>English</strong> / <a href="README_zh.md">中文</a>
+</p>
 
 This repository contains a multimodal high-level planning project for embodied AI tasks based on the World-Aware Planning (WAP) trajectory data. The project studies how to improve a vision-language policy with supervised fine-tuning and preference optimization.
 
@@ -15,7 +26,22 @@ The project compares two preference-construction strategies:
 
 Policy SFT, semantic state predictor training, DPO training, and shared evaluation utilities are placed under `shared/scripts/` because both methods use the same policy and semantic-state backbone.
 
-## Project Overview
+<a id="table-of-contents"></a>
+
+## 📚 Table of Contents
+
+- [🧭 Project Overview](#project-overview)
+- [🧠 Methods](#methods)
+- [📊 Results Summary](#results-summary)
+- [🗂️ Repository Structure](#repository-structure)
+- [🛠️ Main Scripts](#main-scripts)
+- [📁 Data and Model Paths](#data-and-model-paths)
+- [📝 Notes](#notes)
+- [⚖️ License](#license)
+
+<a id="project-overview"></a>
+
+## 🧭 Project Overview
 
 The base policy is trained with Qwen2.5-VL-3B-Instruct and LoRA SFT. It predicts high-level semantic actions rather than low-level robot controls.
 
@@ -43,9 +69,11 @@ put down the tomato
 done
 ```
 
-## Methods
+<a id="methods"></a>
 
-### 1. Policy SFT
+## 🧠 Methods
+
+### 🔹 1. Policy SFT
 
 The initial policy is trained from WAP trajectory data. Each training sample contains an instruction, a visual observation, the history of previous high-level actions, and the expert next action.
 
@@ -55,7 +83,7 @@ Result:
 Strict action accuracy: 87.0%
 ```
 
-### 2. Value-Function DPO
+### 🔹 2. Value-Function DPO
 
 This method trains a value model that estimates task progress from a predicted post-action semantic state.
 
@@ -95,7 +123,7 @@ GT candidate coverage: 91.2%
 
 This suggests that the value function provides a meaningful but noisy preference signal, mainly limited by coarse trajectory-progress labels.
 
-### 3. Successor-State Consistency DPO
+### 🔹 3. Successor-State Consistency DPO
 
 This method constructs preference pairs by comparing how well different candidate actions explain the expert successor semantic state.
 
@@ -126,7 +154,9 @@ Reward margin: 0.4107
 
 This method is used as the stronger final pipeline in this project.
 
-## Results Summary
+<a id="results-summary"></a>
+
+## 📊 Results Summary
 
 | Method | Preference Signal | DPO Pairs | Strict Accuracy | Reward Margin |
 | --- | --- | ---: | ---: | ---: |
@@ -134,7 +164,9 @@ This method is used as the stronger final pipeline in this project.
 | Value-Function DPO | Task-progress value score | 1,793 | 87.7% | 0.2277 |
 | Successor-State Consistency DPO | Expert successor-state NLL margin | 2,219 | 88.3% | 0.4107 |
 
-## Repository Structure
+<a id="repository-structure"></a>
+
+## 🗂️ Repository Structure
 
 ```text
 .
@@ -172,7 +204,9 @@ This method is used as the stronger final pipeline in this project.
 
 Large files such as raw data, processed JSONL files, model checkpoints, LoRA adapters, logs, and evaluation outputs are intentionally excluded from the repository.
 
-## Main Scripts
+<a id="main-scripts"></a>
+
+## 🛠️ Main Scripts
 
 Common data preparation:
 
@@ -207,7 +241,9 @@ Successor-state consistency DPO:
 methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
 ```
 
-## Data and Model Paths
+<a id="data-and-model-paths"></a>
+
+## 📁 Data and Model Paths
 
 The scripts assume the following local paths:
 
@@ -222,8 +258,16 @@ models/qwen2_5_vl_3b_wap_value_function_lora/
 
 These files are not included in this repository.
 
-## Notes
+<a id="notes"></a>
+
+## 📝 Notes
 
 - This project operates at the high-level semantic action level.
 - The successor-state consistency method uses expert successor states only for offline preference construction, not for test-time inference.
 - At inference time, the final DPO policy directly predicts the next high-level action from the current observation, instruction, and action history.
+
+<a id="license"></a>
+
+## ⚖️ License
+
+This project is released under the [MIT License](LICENSE).

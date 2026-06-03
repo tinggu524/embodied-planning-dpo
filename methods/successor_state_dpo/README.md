@@ -1,6 +1,8 @@
 # Successor-State Consistency DPO
 
-[English](README.md) | [中文](README_zh.md)
+<p align="center">
+  <strong>English</strong> / <a href="README_zh.md">中文</a>
+</p>
 
 This method constructs DPO preference pairs by using a semantic state prediction model to identify hard negative actions. It is the stronger final pipeline in this project.
 

@@ -1,6 +1,8 @@
 # Value-Function DPO
 
-[English](README.md) | [中文](README_zh.md)
+<p align="center">
+  <strong>English</strong> / <a href="README_zh.md">中文</a>
+</p>
 
 This method evaluates a task-progress value function as a critic for high-level embodied planning. It is used as a comparison against the successor-state consistency method.
 

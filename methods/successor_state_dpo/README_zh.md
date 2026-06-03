@@ -1,6 +1,8 @@
 # 后继语义状态一致性 DPO
 
-[English](README.md) | [中文](README_zh.md)
+<p align="center">
+  <a href="README.md">English</a> / <strong>中文</strong>
+</p>
 
 该方法使用语义状态预测模型来构造 DPO 偏好对，是本项目中效果更好的最终方案。
 

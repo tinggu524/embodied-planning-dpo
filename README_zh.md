@@ -1,6 +1,17 @@
 # 面向具身智能的多模态高层规划与偏好优化
 
-[English](README.md) | [中文](README_zh.md)
+<p align="center">
+  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/Project%20Page-GitHub-4b5563?style=for-the-badge&logo=github" alt="Project Page"></a>
+  <a href="https://github.com/tinggu524/embodied-planning-dpo"><img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
+  <a href="#methods"><img src="https://img.shields.io/badge/Method-LoRA%20SFT%20%2B%20DPO-2e7d32?style=for-the-badge" alt="Method"></a>
+  <a href="#data-and-model-paths"><img src="https://img.shields.io/badge/Dataset-WAP%20Trajectories-1565c0?style=for-the-badge" alt="Dataset"></a>
+  <a href="https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct"><img src="https://img.shields.io/badge/Model-Qwen2.5--VL--3B-f57c00?style=for-the-badge" alt="Model"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-6a1b9a?style=for-the-badge" alt="License"></a>
+</p>
+
+<p align="center">
+  <a href="README.md">English</a> / <strong>中文</strong>
+</p>
 
 本仓库整理了一个基于 World-Aware Planning (WAP) 轨迹数据的多模态高层规划项目。项目关注的问题是：在给定任务指令、当前视觉观测和历史高层动作的情况下，如何让视觉语言策略模型更可靠地预测下一步语义动作。
 
@@ -11,7 +22,22 @@
 
 Policy SFT、语义状态预测模型训练、DPO 训练和通用评估工具放在 `shared/scripts/` 下，因为两个方法共用同一个策略模型和语义状态预测模块。
 
-## 项目任务
+<a id="table-of-contents"></a>
+
+## 📚 目录
+
+- [🧭 项目任务](#project-overview)
+- [🧠 方法概览](#methods)
+- [📊 结果对比](#results-summary)
+- [🗂️ 仓库结构](#repository-structure)
+- [🛠️ 主要脚本](#main-scripts)
+- [📁 本地路径约定](#data-and-model-paths)
+- [📝 说明](#notes)
+- [⚖️ License](#license)
+
+<a id="project-overview"></a>
+
+## 🧭 项目任务
 
 基础策略模型使用 `Qwen2.5-VL-3B-Instruct` 进行 LoRA SFT，预测的是高层语义动作，而不是底层机器人控制信号。
 
@@ -39,9 +65,11 @@ put down the tomato
 done
 ```
 
-## 方法概览
+<a id="methods"></a>
 
-### 1. Policy SFT
+## 🧠 方法概览
+
+### 🔹 1. Policy SFT
 
 首先从 WAP 轨迹数据中构建高层规划训练集。每条样本包含任务指令、当前图像、历史动作和专家下一步动作。
 
@@ -51,7 +79,7 @@ done
 严格动作准确率：87.0%
 ```
 
-### 2. 任务进度价值函数 DPO
+### 🔹 2. 任务进度价值函数 DPO
 
 该方法训练一个 value function，用于估计预测语义状态距离任务完成的进度。
 
@@ -91,7 +119,7 @@ GT candidate coverage：91.2%
 
 结果表明，value function 能提供一定偏好信号，但受限于轨迹进度标签较粗，候选动作区分度不足。
 
-### 3. 后继语义状态一致性 DPO
+### 🔹 3. 后继语义状态一致性 DPO
 
 该方法通过比较不同候选动作解释专家后继语义状态的难度来构造偏好对。
 
@@ -122,7 +150,9 @@ Reward margin：0.4107
 
 该方案是本项目中效果更好的最终方法。
 
-## 结果对比
+<a id="results-summary"></a>
+
+## 📊 结果对比
 
 | 方法 | 偏好信号 | DPO Pairs | 严格动作准确率 | Reward Margin |
 | --- | --- | ---: | ---: | ---: |
@@ -130,7 +160,9 @@ Reward margin：0.4107
 | 任务进度价值函数 DPO | Value function 进度分 | 1,793 | 87.7% | 0.2277 |
 | 后继语义状态一致性 DPO | 专家后继状态 NLL margin | 2,219 | 88.3% | 0.4107 |
 
-## 仓库结构
+<a id="repository-structure"></a>
+
+## 🗂️ 仓库结构
 
 ```text
 .
@@ -168,7 +200,9 @@ Reward margin：0.4107
 
 原始数据、处理后的 JSONL、模型权重、LoRA adapter、日志和评估结果等大文件不会提交到仓库中。
 
-## 主要脚本
+<a id="main-scripts"></a>
+
+## 🛠️ 主要脚本
 
 通用数据预处理：
 
@@ -203,7 +237,9 @@ methods/value_function_dpo/scripts/evaluate_value_selector.py
 methods/successor_state_dpo/scripts/generate_policy_dpo_pairs.py
 ```
 
-## 本地路径约定
+<a id="data-and-model-paths"></a>
+
+## 📁 本地路径约定
 
 脚本默认使用以下本地路径：
 
@@ -218,8 +254,16 @@ models/qwen2_5_vl_3b_wap_value_function_lora/
 
 这些文件需要在本地或训练服务器上自行准备，不包含在 Git 仓库中。
 
-## 说明
+<a id="notes"></a>
+
+## 📝 说明
 
 - 本项目工作在高层语义动作层面，不涉及底层连续控制。
 - 后继语义状态一致性方法只在离线偏好构造阶段使用专家后继状态，测试时不使用未来轨迹信息。
 - 最终推理时，DPO policy 直接根据当前观测、任务指令和历史动作预测下一步高层动作。
+
+<a id="license"></a>
+
+## ⚖️ License
+
+本项目使用 [MIT License](LICENSE)。

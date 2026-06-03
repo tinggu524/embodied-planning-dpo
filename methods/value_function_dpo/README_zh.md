@@ -1,6 +1,8 @@
 # 任务进度价值函数 DPO
 
-[English](README.md) | [中文](README_zh.md)
+<p align="center">
+  <a href="README.md">English</a> / <strong>中文</strong>
+</p>
 
 该方法训练一个任务进度 value function，用它作为 critic 给 policy 生成的候选动作打分，并构造 DPO 偏好对。它在本项目中作为对比方案，用于分析 value-function critic 在高层具身规划任务中的效果。
 
