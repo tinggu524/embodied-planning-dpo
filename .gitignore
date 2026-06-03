@@ -1,0 +1,37 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.so
+
+# Local data and generated artifacts
+data/raw/
+data/processed/
+models/
+results/
+logs/
+
+# Checkpoints and large model files
+checkpoint-*/
+**/checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# Archives and local presentation/export artifacts
+*.tar
+*.tar.gz
+*.zip
+*.key
+
+# Python / notebook cache
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment files
+.env
+.venv/
+venv/
